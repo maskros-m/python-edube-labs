@@ -1,0 +1,186 @@
+#!/usr/bin/env python3
+
+import abc
+
+class Scanner(abc.ABC):
+    def __init__(self):
+        pass
+        
+    def scan_document(self):
+        print("The document has been successfully scanned.")
+        
+    @abc.abstractmethod
+    def get_scanner_status(cls):
+        pass
+        
+class Printer(abc.ABC):
+    def __init__(self):
+        pass
+    
+    def print_document(self):
+        print("The document has been successfully printed.")
+    
+    @abc.abstractmethod
+    def get_printer_status(cls):
+        pass
+
+class MFD1(Printer, Scanner):
+    __SN = "MFD1X"
+    __SN_ = ""
+    __SN_device_cnt = 0
+    def __init__(self):
+        MFD1.__SN_device_cnt += 1
+        
+    @classmethod
+    def SN_generator(cls, __SN_device_cnt):
+        cls.__SN_ = ""
+        digit = str(cls.__SN_device_cnt)
+        if len(digit) == 1:
+            cls.__SN_ += "0"*5 + digit
+        elif len(digit) == 2:
+            cls.__SN_ += "0"*4 + digit
+        elif len(digit) == 3:
+            cls.__SN_ += "0"*3 + digit
+        elif len(digit) == 4:
+            cls.__SN_ += "0"*2 + digit
+        elif len(digit) == 5:
+            cls.__SN_ += "0" + digit
+        else:
+            cls.__SN_ += digit
+        return cls.__SN_
+    
+    @classmethod
+    def number_made(cls):
+        print("Number of devices made: {}".format(cls.__SN_device_cnt))
+        
+    @classmethod
+    def get_printer_status(cls):
+        cls.__SN_ = cls.SN_generator(cls.__SN_device_cnt)
+        print("This device has a maximum resolution of 780 dpi.")
+        print("S/N: {}{}".format(cls.__SN, cls.__SN_))
+    
+    @classmethod
+    def get_scanner_status(cls):
+        cls.__SN_ = cls.SN_generator(cls.__SN_device_cnt)
+        print("This device has a maximum resolution of 780 dpi.")
+        print("S/N: {}{}".format(cls.__SN, cls.__SN_))
+
+class MFD2(Printer, Scanner):
+    __pages_printed = 0
+    
+    __SN = "MFD2Z"
+    __SN_ = ""
+    __SN_device_cnt = 0
+    def __init__(self):
+        MFD2.__SN_device_cnt += 1
+        
+    @classmethod
+    def SN_generator(cls, __SN_device_cnt):
+        cls.__SN_ = ""
+        digit = str(cls.__SN_device_cnt)
+        if len(digit) == 1:
+            cls.__SN_ += "0"*5 + digit
+        elif len(digit) == 2:
+            cls.__SN_ += "0"*4 + digit
+        elif len(digit) == 3:
+            cls.__SN_ += "0"*3 + digit
+        elif len(digit) == 4:
+            cls.__SN_ += "0"*2 + digit
+        elif len(digit) == 5:
+            cls.__SN_ += "0" + digit
+        else:
+            cls.__SN_ += digit
+        return cls.__SN_
+    
+    @classmethod
+    def number_made(cls):
+        print("Number of devices made: {}".format(cls.__SN_device_cnt))
+        
+    @classmethod
+    def get_printer_status(cls):
+        cls.__SN_ = cls.SN_generator(cls.__SN_device_cnt)
+        print("This device has a maximum resolution of 1200 dpi.")
+        print("S/N: {}{}".format(cls.__SN, cls.__SN_))
+    
+    @classmethod
+    def get_scanner_status(cls):
+        cls.__SN_ = cls.SN_generator(cls.__SN_device_cnt)
+        print("This device has a maximum resolution of 1200 dpi.")
+        print("S/N: {}{}".format(cls.__SN, cls.__SN_))
+    
+    @classmethod
+    def pages_to_print(cls, pages):
+        cls.__pages_printed += pages
+    
+    @classmethod
+    def operation_history(cls):
+        print("Total pages printed to date: {}".format(cls.__pages_printed))
+    
+class MFD3(Printer, Scanner):
+    __pages_printed = 0
+    
+    __SN = "MFD3Y"
+    __SN_ = ""
+    __SN_device_cnt = 0
+    def __init__(self):
+        MFD3.__SN_device_cnt += 1
+        
+    @classmethod
+    def SN_generator(cls, __SN_device_cnt):
+        cls.__SN_ = ""
+        digit = str(cls.__SN_device_cnt)
+        if len(digit) == 1:
+            cls.__SN_ += "0"*5 + digit
+        elif len(digit) == 2:
+            cls.__SN_ += "0"*4 + digit
+        elif len(digit) == 3:
+            cls.__SN_ += "0"*3 + digit
+        elif len(digit) == 4:
+            cls.__SN_ += "0"*2 + digit
+        elif len(digit) == 5:
+            cls.__SN_ += "0" + digit
+        else:
+            cls.__SN_ += digit
+        return cls.__SN_
+    
+    @classmethod
+    def number_made(cls):
+        print("Number of devices made: {}".format(cls.__SN_device_cnt))
+        
+    @classmethod
+    def get_printer_status(cls):
+        cls.__SN_ = cls.SN_generator(cls.__SN_device_cnt)
+        print("This device has a maximum resolution of 3600 dpi.")
+        print("S/N: {}{}".format(cls.__SN, cls.__SN_))
+    
+    @classmethod
+    def get_scanner_status(cls):
+        cls.__SN_ = cls.SN_generator(cls.__SN_device_cnt)
+        print("This device has a maximum resolution of 1200 dpi.")
+        print("S/N: {}{}".format(cls.__SN, cls.__SN_))
+        
+    @classmethod
+    def pages_to_print(cls, pages):
+        cls.__pages_printed += pages
+    
+    @classmethod
+    def operation_history(cls):
+        print("Total pages printed to date: {}".format(cls.__pages_printed))
+    
+    def fax_to(self, number):
+        print("Document has been  successfully faxed to {}.".format(number))
+
+mfd_1 = MFD1()
+mfd_1.get_printer_status()
+mfd_2 = MFD2()
+mfd_2.get_scanner_status()
+mfd_2.pages_to_print(13)
+mfd_2.pages_to_print(5)
+mfd_2.operation_history()
+mfd_3 = MFD3()
+mfd_3.get_printer_status()
+mfd_3.pages_to_print(4)
+mfd_3.pages_to_print(36)
+mfd_3.operation_history()
+mfd_3.pages_to_print(7)
+mfd_3.operation_history()
